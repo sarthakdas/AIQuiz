@@ -3,11 +3,16 @@ from flask import Flask, url_for, render_template, request, redirect, session
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from flask_admin import Admin 
+from flask_admin.contrib.sqla import ModelView
 
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///questions.db'
+app.config['SECRET_KEY'] = 'jamicanMonkeyIsGerman'
+
 db = SQLAlchemy(app)
+
+admin = Admin(app)
 
 question_tag = db.Table('question_tags',
     db.Column('tag_id', db.Integer, db.ForeignKey('tag.id'), primary_key=True),
@@ -30,6 +35,9 @@ class Tag(db.Model):
 
     def __repr__(self):
         return '<Tag %r>' % self.tag
+
+admin.add_view(ModelView(Question, db.session))
+admin.add_view(ModelView(Tag, db.session))
 
 @app.route('/', methods=['POST', 'GET'])
 def index():
