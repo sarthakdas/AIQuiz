@@ -1,9 +1,7 @@
 """Flask Login Example and instagram fallowing find"""
-
 from flask import Flask, url_for, render_template, request, redirect, session 
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
-from questions.blueprint import questions
 from flask_admin import Admin 
 
 
