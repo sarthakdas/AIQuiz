@@ -5,5 +5,41 @@
 {% endblock %}
 
 {% block content%}
-    <h1>Hello</h1>
+    <h1>Hello Welcome to QUIZ AI! </h1>
+    <h3>
+        The smartest quiz app using AI and Math to help you improve
+        <small class="text-muted">at an increased rate of 40%</small>
+    </h3>
+
+    <br>
+
+    <h1 class="text-center">Login to get started</h1>
+    <a href="{{ url_for('posts.posts_list') }}">
+    <div class="d-grid gap-2">
+        
+            <button class="btn btn-lg btn-primary" type="button">Login</button>
+        
+    </div></a>
+    
+
+    <br> <br><br> <br>
+
+    <p class="lead">
+        QUIZ AI is developed by Sarthak Das, a second year Imperial Design Engineering Student. He is currently looking for
+        alpha and beta testers for this application, and case study reseach opportuinies. 
+        <br> <br>
+        Please get in touch if you know flask, python, SQLite or run a small to medium sized tuition center and looking into digitalisation
+    </p>
+
+
+    <br>
+
+    <figure class="text-center">
+      <blockquote class="blockquote">
+        <p class="mb-0">    Best revision app I have ever used! Recommend it to any one finding a new tutor
+      </blockquote>
+      <figcaption class="blockquote-footer">
+        Student of <cite title="Source Title">Khancademy and Kumon</cite>
+      </figcaption>
+    </figure>
 {% endblock %}

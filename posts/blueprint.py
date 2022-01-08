@@ -88,13 +88,10 @@ def post_create():
 
 # localhost blog
 @posts.route('/')
+@login_required
 def posts_list():
-    q = request.args.get('q')
-    
-    if q:
-        posts = Post.query.filter(Post.title.contains(q)) or  Post.body.contains(q)
-    else:
-        posts = Post.query.order_by(Post.created.desc())
+
+    posts = Post.query.order_by(Post.created.desc())
     return render_template('posts/posts.html', posts= posts)
 
 @posts.route('/<slug>')

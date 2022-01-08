@@ -9,12 +9,13 @@ db.create_all()
 us = User.query.first()
 u = Role.query.first()
 
-user_datastore.create_user(email="student@text.com", password="student")
-user_datastore.create_role(name="student")
+user = user_datastore.create_user( email="admin@text.com", password="admin")
+role = user_datastore.create_role(name="admin")
 
 # user_datastore
-
+db.session.add(user)
+db.session.commit()
 
 user_datastore.add_role_to_user(us,u)
-# db.session.add(u)
+
 db.session.commit()
