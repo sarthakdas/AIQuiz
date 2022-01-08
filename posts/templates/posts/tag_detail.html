@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{tag.title}}
+{% endblock %}
+
+{% block content %}
+    <h1>{{tag.title}}</h1>
+    {% for post in tag.posts %}
+
+        {% include 'posts/includes/card.html'%}
+
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Post List
+{% endblock %}
+
+
+{% block content %}
+    <h1>Blueprint</h1>
+
+    {% for post in posts%}
+
+        {% include 'posts/includes/card.html'%}
+
+    {% endfor %}
+{% endblock %}
