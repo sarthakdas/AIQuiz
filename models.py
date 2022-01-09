@@ -90,6 +90,7 @@ class Scorecard(db.Model):
 
     correct = db.Column(db.Integer)
     total = db.Column(db.Integer)
+    percentage = db.Column(db.Integer)
 
     user = relationship("User")
     tag = relationship("Tag")
