@@ -50,14 +50,43 @@ class BaseModelView(ModelView):
                 pass
         return super().on_model_change(form,model,is_created)
 
+class UserTagGenModelView(ModelView):
+    def on_model_change(self, form, model,is_created):
+        tags = Tag.query.all()
+        print(tags)
+        for tag in tags: 
+            if Scorecard.query.filter_by(user=model, tag=tag).first():
+                pass
+            else:
+                blankResult = Scorecard(correct=0, total=0)
+                blankResult.tag = tag
+            
+                model.scorecard.append(blankResult)
+                db.session.add(model)
+                db.session.commit()
+
+        # else:
+        #     tags = Tag.query.all()
+        #     print(tags)
+        #     for tag in tags: 
+        #         blankResult = Scorecard(correct=0, total=0)
+        #         blankResult.tag = tag
+        #         model.scorecard.append(blankResult)
+        #         db.session.add(model)
+        #         db.session.commit()
+
+        #     User.query.filter_by(username='admin').first()
+
+        return super().on_model_change(form,model,is_created)
+
 class PostAdminView(AdminMixin, BaseModelView):
     form_columns= ['title', 'body', 'answer','tags']
 
 class TagAdminView(AdminMixin, BaseModelView):
     form_columns= ['title', 'posts']
 
-class UserAdminView(AdminMixin, BaseModelView):
-    form_columns= ['email', 'password', 'roles']
+class UserAdminView(AdminMixin, UserTagGenModelView):
+    form_columns= ['email', 'password', 'roles','active']
 
 admin = Admin(app, 'FlaskApp', url="/", index_view=HomeAdminView(name="home"))
 
