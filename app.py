@@ -59,6 +59,7 @@ admin.add_view(PostAdminView(Post, db.session))
 admin.add_view(TagAdminView(Tag, db.session))
 admin.add_view(AdminView(User, db.session))
 admin.add_view(AdminView(Role, db.session))
+admin.add_view(AdminView(Scorecard, db.session))
 
 
 user_datastore = SQLAlchemyUserDatastore(db, User, Role)

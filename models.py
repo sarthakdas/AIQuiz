@@ -1,6 +1,8 @@
 from datetime import datetime
 from time import time
 import re
+from sqlalchemy.orm import relationship
+# from flask_sqlalchemy import relationship
 
 from flask_security import UserMixin, RoleMixin
 from app import db
@@ -20,7 +22,6 @@ roles_users = db.Table('roles_users',
 )
 
 class Post(db.Model):
-    __table_args__ = {'extend_existing': True}
 
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(140))
@@ -43,7 +44,6 @@ class Post(db.Model):
         return f'<Post id: {self.id} title: {self.title}>'
 
 class Tag(db.Model):
-    # __table_args__ = {'extend_existing': True}
 
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(140))
@@ -59,13 +59,14 @@ class Tag(db.Model):
     def __repr__(self):
         return f'<Tag id: {self.id} title: {self.title}>'
 
-
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key = True)
     email = db.Column(db.String(100), unique=True)
     password = db.Column(db.String(255))
     active = db.Column(db.Boolean)
     roles = db.relationship('Role', secondary=roles_users, backref = db.backref('users'), lazy='dynamic')
+
+    scorecard = db.relationship('Scorecard')
 
     def __repr__(self):
         return f'<User id: {self.id} title: {self.email}>'
@@ -76,3 +77,14 @@ class Role(db.Model, RoleMixin):
 
     def __repr__(self):
         return f'<Role id: {self.id} title: {self.name}>'
+
+class Scorecard(db.Model):
+
+    user_id = db.Column(db.ForeignKey('user.id'), primary_key=True)
+    tag_id = db.Column(db.ForeignKey('tag.id'), primary_key=True)
+
+    correct = db.Column(db.Integer)
+    total = db.Column(db.Integer)
+
+    tag = relationship("Tag")
+    
