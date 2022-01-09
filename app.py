@@ -44,20 +44,26 @@ class HomeAdminView(AdminMixin, AdminIndexView):
 class BaseModelView(ModelView):
     def on_model_change(self, form, model,is_created):
         if is_created:
-            model.generate_slug()
+            try:
+                model.generate_slug()
+            except:
+                pass
         return super().on_model_change(form,model,is_created)
 
 class PostAdminView(AdminMixin, BaseModelView):
-    form_columns= ['title', 'body', 'tags']
+    form_columns= ['title', 'body', 'answer','tags']
 
 class TagAdminView(AdminMixin, BaseModelView):
     form_columns= ['title', 'posts']
+
+class UserAdminView(AdminMixin, BaseModelView):
+    form_columns= ['email', 'password', 'roles']
 
 admin = Admin(app, 'FlaskApp', url="/", index_view=HomeAdminView(name="home"))
 
 admin.add_view(PostAdminView(Post, db.session))
 admin.add_view(TagAdminView(Tag, db.session))
-admin.add_view(AdminView(User, db.session))
+admin.add_view(UserAdminView(User, db.session))
 admin.add_view(AdminView(Role, db.session))
 admin.add_view(AdminView(Scorecard, db.session))
 
