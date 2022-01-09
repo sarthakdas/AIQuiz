@@ -69,7 +69,7 @@ class User(db.Model, UserMixin):
     scorecard = db.relationship('Scorecard')
 
     def __repr__(self):
-        return f'<User id: {self.id} title: {self.email}>'
+        return f'<User id: {self.id} email: {self.email}>'
 
 class Role(db.Model, RoleMixin):
     id = db.Column(db.Integer, primary_key = True)
@@ -86,5 +86,7 @@ class Scorecard(db.Model):
     correct = db.Column(db.Integer)
     total = db.Column(db.Integer)
 
+    user = relationship("User")
     tag = relationship("Tag")
+    
     
