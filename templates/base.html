@@ -44,10 +44,15 @@
               <div class="collapse navbar-collapse" id="navbarColor03">
                 <ul class="navbar-nav me-auto">
                   <li class="nav-item">
-                    <a class="nav-link active" href="#">Home
-                      <span class="visually-hidden">(current)</span>
+                    <a class="nav-link" href="{{ url_for('posts.posts_list') }}">Home
+          
                     </a>
                   </li>
+                  {% if current_user.has_role('student') %}
+                  <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('posts.scorecard') }}">Scorecard</a>
+                  </li>
+                  {% endif %}
                   
                   {% if current_user.has_role('admin') %}
                   <li class="nav-item">

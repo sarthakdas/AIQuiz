@@ -5,6 +5,7 @@ from flask import redirect
 from flask import url_for
 
 from flask_security import login_required
+from flask_security import current_user
 
 from models import *
 from .forms import PostForm
@@ -95,11 +96,19 @@ def posts_list():
     return render_template('posts/posts.html', posts= posts)
 
 @posts.route('/<slug>')
+@login_required
 def post_detail(slug):
     post = Post.query.filter(Post.slug==slug).first()
     return render_template('posts/post_detail.html', post=post)
 
 @posts.route('/tags/<slug>')
+@login_required
 def tag_detail(slug):
     tag = Tag.query.filter(Tag.slug==slug).first()
     return render_template('posts/tag_detail.html', tag=tag)
+
+@posts.route('/scorecard')
+@login_required
+def scorecard():
+    scores = Scorecard.query.filter(Scorecard.user==current_user)
+    return render_template('posts/scorecard.html', scores=scores)
