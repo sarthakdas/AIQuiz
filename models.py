@@ -2,6 +2,7 @@ from datetime import datetime
 from time import time
 import re
 from sqlalchemy.orm import relationship
+from sqlalchemy_imageattach.entity import Image, image_attachment
 # from flask_sqlalchemy import relationship
 
 from flask_security import UserMixin, RoleMixin

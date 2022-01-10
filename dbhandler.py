@@ -1,7 +1,7 @@
-from app import *
+from app import app
 from models import *
 
-db.create_all()
+# db.create_all()
 
 # p = User(title="hello third", body="content 3")
 # p.tags.append(Tag.query.first())
@@ -23,8 +23,8 @@ db.create_all()
 # Scorecard.__table__.drop(db.engine)
 # # user_datastore
 # db.session.add(us)
-db.session.commit()
+# db.session.commit()
 
 # user_datastore.add_role_to_user(us,u)
 
-# db.session.commit()
+
