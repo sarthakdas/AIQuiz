@@ -11,6 +11,11 @@ from flask_security import SQLAlchemyUserDatastore
 from flask_security import Security
 from flask_security import current_user
 
+<<<<<<< Updated upstream
+=======
+from flask_uploads import configure_uploads, IMAGES, UploadSet
+
+>>>>>>> Stashed changes
 from config import Config
 
 app = Flask(__name__)
@@ -18,6 +23,21 @@ app.config.from_object(Config)
 
 db = SQLAlchemy(app)
 
+<<<<<<< Updated upstream
+=======
+images = UploadSet('images', IMAGES)
+configure_uploads(app,images)
+
+#UNCOMMENT IF A MIGRATION IS REQUIRED
+
+# from flask_migrate import Migrate, MigrateCommand
+# from flask_script import Manager
+# migrate = Migrate(app,db)
+# manager = Manager(app)
+# manager.add_command('db', MigrateCommand)
+
+
+>>>>>>> Stashed changes
 from models import *
 
 class AdminMixin:
@@ -80,7 +100,7 @@ class UserTagGenModelView(ModelView):
         return super().on_model_change(form,model,is_created)
 
 class PostAdminView(AdminMixin, BaseModelView):
-    form_columns= ['title', 'body', 'answer','tags']
+    form_columns= ['title', 'body', 'image','answer','tags']
 
 class TagAdminView(AdminMixin, BaseModelView):
     form_columns= ['title', 'posts']

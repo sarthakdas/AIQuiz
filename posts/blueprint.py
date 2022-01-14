@@ -6,9 +6,11 @@ from flask import url_for
 
 from flask_security import login_required
 
+from flask_uploads import configure_uploads, IMAGES, UploadSet
+
 from models import *
 from .forms import PostForm
-from app import db
+from app import db, images
 
 
 posts = Blueprint('posts',__name__,  template_folder='templates')
@@ -37,7 +39,7 @@ def post_update(slug):
                     return 'There was an issue adding your tag'
 
         try:
-            post = Post(title=title, body=body)
+            post = Post(title=title, body=body, image=image.read())
             db.session.add(post)
             for tag_name in Question_tags_list:
                 tag = Tag.query.filter_by(title=tag_name).first()
@@ -59,6 +61,9 @@ def post_create():
     if request.method == 'POST':
         title = request.form.get('title')
         body = request.form.get('body')
+        imag = request.form.get('image')
+        print(imag)
+        # filename = images.save(form.image.data)
         tags = request.form.get('tags')
 
         Question_tags_list = tags.upper().replace(" ", "").split(",")
@@ -72,7 +77,7 @@ def post_create():
                     return 'There was an issue adding your tag'
 
         try:
-            post = Post(title=title, body=body)
+            post = Post(title=title, body=body, image=image.data)
             db.session.add(post)
             for tag_name in Question_tags_list:
                 tag = Tag.query.filter_by(title=tag_name).first()
@@ -90,7 +95,6 @@ def post_create():
 @posts.route('/')
 @login_required
 def posts_list():
-
     posts = Post.query.order_by(Post.created.desc())
     return render_template('posts/posts.html', posts= posts)
 

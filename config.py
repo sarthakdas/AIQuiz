@@ -9,3 +9,4 @@ class Config:
     SECRET_KEY = "germanmonekyseatfask"
     SECURITY_PASSWORD_SALT = 'awdasdasd'
     SECURITY_PASSWORD_HASH = 'sha512_crypt'
+    UPLOADED_IMAGES_DEST = 'uploads/images'

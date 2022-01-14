@@ -29,6 +29,7 @@ class Post(db.Model):
     slug = db.Column(db.String(140), unique=True)
 
     body = db.Column(db.Text)
+    image = db.Column(db.LargeBinary)
     answer = db.Column(db.String(100))
 
 
