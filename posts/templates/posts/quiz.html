@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Post List
+{% endblock %}
+
+
+{% block content %}
+    <h1>QUIZ {{ current_user.email }}!</h1>
+
+    {% for post in questions%}
+
+    <div class="card border-primary mb-3">
+        <div class="card-header"> {{loop.index}}. {{post.title}}</div>
+        <div class="card-body">
+          <p class="card-text" style="font-size:24px;">{{post.body}}
+            
+          </p>
+            <label for="exampleInputEmail1" class="form-label mt-4">Answer</label>
+            <input type="text" class="form-control" id="answer-{{loop.index}}">
+        </div>
+    </div>
+    {% endfor %}
+
+    <button class="btn btn-success mb-5" id="sendAnswers"> Submit </button>
+
+{% endblock %}

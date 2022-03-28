@@ -98,7 +98,7 @@ class TagAdminView(AdminMixin, TagUserGenModelView):
 class UserAdminView(AdminMixin, UserTagGenModelView):
     form_columns= ['email', 'password', 'roles','active']
 
-admin = Admin(app, 'FlaskApp', url="/", index_view=HomeAdminView(name="home"))
+admin = Admin(app, 'AI QUIZ ADMIN', url="/", index_view=HomeAdminView(name="home"))
 
 admin.add_view(PostAdminView(Post, db.session))
 admin.add_view(TagAdminView(Tag, db.session))

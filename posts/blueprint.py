@@ -3,6 +3,7 @@ from flask import render_template
 from flask import request
 from flask import redirect
 from flask import url_for
+from flask import jsonify
 
 from flask_security import login_required
 from flask_security import current_user
@@ -112,3 +113,22 @@ def tag_detail(slug):
 def scorecard():
     scores = Scorecard.query.filter(Scorecard.user==current_user)
     return render_template('posts/scorecard.html', scores=scores)
+
+@posts.route('/quiz')
+@login_required
+def quiz():
+    posts = Post.query.order_by(Post.created.desc())
+    return render_template('posts/quiz.html', questions = posts)
+
+@posts.route("/subans", methods=["POST"])
+def sub():
+    jsdata = request.form["canvas_data"]
+    j = ''.join( c for c in jsdata if  c not in '[]",' )
+    print(j)
+    j = "Hello"
+    params = {"Answers":j}
+    return jsonify(params)
+
+@posts.route("/result/<unique_id>")
+def result_for_uuid(unique_id):
+    return render_template("posts/result.html", data=unique_id)
