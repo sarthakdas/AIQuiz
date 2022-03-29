@@ -93,7 +93,6 @@ def post_create():
 @posts.route('/')
 @login_required
 def posts_list():
-
     posts = Post.query.order_by(Post.created.desc())
     return render_template('posts/posts.html', posts= posts)
 
@@ -121,11 +120,31 @@ def quiz():
     posts = Post.query.order_by(Post.created.desc())
     return render_template('posts/quiz.html', questions = posts)
 
+
+def scoreCalculator(data):
+    score = 0
+
+    for question in data:
+        questionID = question[0]
+        user_answer = question[1]
+        try:
+            user_answer = str(user_answer)
+        except:
+            pass
+        Q = Post.query.get(int(questionID))
+        correct_answer = Q.answer
+
+        if str(correct_answer) == user_answer:
+            score += 1
+
+    print(score)
+
 @posts.route("/receiver", methods=["POST"])
 @login_required
 def postME():
  data = request.get_json()
  print(data)
+ scoreCalculator(data)
  data = jsonify(data)
  return data
 
