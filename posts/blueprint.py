@@ -111,4 +111,26 @@ def tag_detail(slug):
 @login_required
 def scorecard():
     scores = Scorecard.query.filter(Scorecard.user==current_user)
+<<<<<<< Updated upstream
     return render_template('posts/scorecard.html', scores=scores)
+=======
+    return render_template('posts/scorecard.html', scores=scores)
+
+@posts.route('/quiz')
+@login_required
+def quiz():
+    posts = Post.query.order_by(Post.created.desc())
+    return render_template('posts/quiz.html', questions = posts)
+
+@posts.route("/receiver", methods=["POST"])
+@login_required
+def postME():
+ data = request.get_json()
+ print(data)
+ data = jsonify(data)
+ return data
+
+@posts.route("/result/<unique_id>")
+def result_for_uuid(unique_id):
+    return render_template("posts/result.html", data=unique_id)
+>>>>>>> Stashed changes
