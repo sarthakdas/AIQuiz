@@ -137,16 +137,16 @@ def scoreCalculator(data):
         if str(correct_answer) == user_answer:
             score += 1
 
-    print(score)
+    return score 
 
 @posts.route("/receiver", methods=["POST"])
 @login_required
 def postME():
  data = request.get_json()
  print(data)
- scoreCalculator(data)
- data = jsonify(data)
- return data
+ score = scoreCalculator(data)
+ score = jsonify(score)
+ return score
 
 @posts.route("/result/<unique_id>")
 def result_for_uuid(unique_id):
