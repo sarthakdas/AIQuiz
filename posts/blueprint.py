@@ -3,9 +3,11 @@ from flask import render_template
 from flask import request
 from flask import redirect
 from flask import url_for
+from flask import jsonify
 
 from flask_security import login_required
 from flask_security import current_user
+
 
 from models import *
 from .forms import PostForm
@@ -111,9 +113,6 @@ def tag_detail(slug):
 @login_required
 def scorecard():
     scores = Scorecard.query.filter(Scorecard.user==current_user)
-<<<<<<< Updated upstream
-    return render_template('posts/scorecard.html', scores=scores)
-=======
     return render_template('posts/scorecard.html', scores=scores)
 
 @posts.route('/quiz')
@@ -133,4 +132,3 @@ def postME():
 @posts.route("/result/<unique_id>")
 def result_for_uuid(unique_id):
     return render_template("posts/result.html", data=unique_id)
->>>>>>> Stashed changes
