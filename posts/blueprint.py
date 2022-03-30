@@ -123,6 +123,9 @@ def quiz():
 
 def scoreCalculator(data):
     score = 0
+    isCorr = []
+    answerList = []
+
 
     for question in data:
         questionID = question[0]
@@ -133,20 +136,42 @@ def scoreCalculator(data):
             pass
         Q = Post.query.get(int(questionID))
         correct_answer = Q.answer
+        answerList.append(str(correct_answer))
 
         if str(correct_answer) == user_answer:
             score += 1
+            isCorr.append(True)
+        else: 
+            isCorr.append(False)
 
-    return score 
+    percentage = int( (score/len(data)) * 100)
+
+    return score, isCorr, answerList,percentage
 
 @posts.route("/receiver", methods=["POST"])
 @login_required
 def postME():
- data = request.get_json()
- print(data)
- score = scoreCalculator(data)
- score = jsonify(score)
- return score
+    data = request.get_json()
+    print(data)
+    # TODO SCORE UPADTER
+    # CALCULATE SCORE 
+    # CALCULATE PERCENTAGE 
+    # UPDATE USER STATS
+    # SEND BACK DATA  {JSON}
+    #  SCORE
+    #  BOOLEAN CORRECT OR WRONG 
+    #  CORRECT ANSWERS 
+    #  USER ANSWERS 
+    score, correct_arr, answerList, percentage = scoreCalculator(data)
+
+
+
+    returnData = jsonify({
+        "score" : score,
+        "isCorrect" : correct_arr,
+        "answerList" : answerList,
+        "percentage": percentage})
+    return returnData
 
 @posts.route("/result/<unique_id>")
 def result_for_uuid(unique_id):
