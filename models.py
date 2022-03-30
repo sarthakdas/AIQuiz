@@ -93,7 +93,7 @@ class Scorecard(db.Model):
     total = db.Column(db.Integer)
     percentage = db.Column(db.Integer)
 
-    user = relationship("User", backref = db.backref('user'))
-    tag = relationship("Tag", backref = db.backref('tag'))
+    user = relationship("User")
+    tag = relationship("Tag")
     
     
