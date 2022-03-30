@@ -120,6 +120,35 @@ def quiz():
     posts = Post.query.order_by(Post.created.desc())
     return render_template('posts/quiz.html', questions = posts)
 
+def scorecardUpdaterCorrect(question):
+    tags = question.tags
+
+    for tag in tags:
+
+        s = Scorecard.query.filter(Scorecard.user==current_user, Scorecard.tag==tag).first()
+
+
+        s.total += 1
+        s.correct += 1
+
+        s.percentage = int((s.correct/s.total) * 100)
+
+    db.session.commit()
+
+
+def scorecardUpdaterInCorrect(question):
+    tags = question.tags
+
+    for tag in tags:
+
+        s = Scorecard.query.filter(Scorecard.user==current_user, Scorecard.tag==tag).first()
+
+
+        s.total += 1
+
+        s.percentage = int((s.correct/s.total) * 100)
+
+    db.session.commit()
 
 def scoreCalculator(data):
     score = 0
@@ -134,6 +163,9 @@ def scoreCalculator(data):
             user_answer = str(user_answer)
         except:
             pass
+
+        
+
         Q = Post.query.get(int(questionID))
         correct_answer = Q.answer
         answerList.append(str(correct_answer))
@@ -141,8 +173,10 @@ def scoreCalculator(data):
         if str(correct_answer) == user_answer:
             score += 1
             isCorr.append(True)
+            scorecardUpdaterCorrect(Q)
         else: 
             isCorr.append(False)
+            scorecardUpdaterInCorrect(Q)
 
     percentage = int( (score/len(data)) * 100)
 
@@ -163,8 +197,6 @@ def postME():
     #  CORRECT ANSWERS 
     #  USER ANSWERS 
     score, correct_arr, answerList, percentage = scoreCalculator(data)
-
-
 
     returnData = jsonify({
         "score" : score,
